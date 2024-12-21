@@ -57,3 +57,38 @@ function handleAddTodo() {
     details.value = "";
   }
 }
+
+function setAlarm() {
+  let alarmTime = document.getElementById('alarm-time').value;
+  let messageDiv = document.getElementById('message');
+
+  if (!alarmTime) {
+    messageDiv.textContent = "Please select a valid time!";
+    messageDiv.style.color = "red";
+    return;
+  }
+
+  // Convert selected time to a Date object
+  let alarmDate = new Date(alarmTime);
+
+  // Check if the selected date is in the future
+  let currentDate = new Date();
+  if (alarmDate <= currentDate) {
+    messageDiv.textContent = "Please select a future time!";
+    messageDiv.style.color = "red";
+    return;
+  }
+
+  // Display confirmation message
+  messageDiv.textContent = `Alarm set for ${alarmDate.toLocaleString()}`;
+  messageDiv.style.color = "#28a745"; // Green color for success
+
+  // Set a timeout for when the alarm triggers
+  let timeDifference = alarmDate - currentDate;
+  
+  setTimeout(function() {
+    alert("Time's up! Your alarm is ringing.");
+    messageDiv.textContent = "Alarm triggered!";
+    messageDiv.style.color = "#ff5733"; // Red color for alarm trigger
+  }, timeDifference);
+}
